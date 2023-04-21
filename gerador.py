@@ -5,7 +5,7 @@ N = 10 # Numero de objetos
 M = 7 # Numero de subconjuntos
 
 # Semente para o gerador pseudoaleatorio
-rd.seed(682)
+rd.seed(895)
 
 F = []
 while True:

@@ -1,4 +1,5 @@
 import numpy as np
+from preprocessa import  remove_variavel
 
 def ler_instancia(file):
     instancia = np.loadtxt(file, dtype = str)
@@ -6,14 +7,10 @@ def ler_instancia(file):
     return instancia
 
 
-def pertence(matriz,i):
-    return np.where(matriz[:,i]==1)[0]  
-
 
 if __name__ == '__main__':
     matriz = ler_instancia('entrada.txt')
-    if len(pertence(matriz,1)) == 1:
-        print('está contido em apenas 1 subconjunto')
-
+    print(matriz)
+    remove_variavel(matriz)
 
 
