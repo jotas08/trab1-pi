@@ -1,5 +1,5 @@
 import numpy as np
-from preprocessa import  remove_variavel
+from preprocessa import  remove_restricao, remove_variavel
 
 def ler_instancia(file):
     instancia = np.loadtxt(file, dtype = str)
@@ -11,6 +11,7 @@ def ler_instancia(file):
 if __name__ == '__main__':
     matriz = ler_instancia('entrada.txt')
     print(matriz)
-    remove_variavel(matriz)
-
+    matriz,var = remove_variavel(matriz)
+    matriz = remove_restricao(matriz,var)
+    print(matriz)
 
