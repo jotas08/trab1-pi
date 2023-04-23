@@ -1,34 +1,26 @@
-def minimum_set_cover(S, F):
-    C = set()
-    U = set(S)
+import numpy as np
 
-    while U:
-        # Encontrar o subconjunto Sj em F com a maior quantidade de elementos não cobertos em U
-        best_subset = max(F, key=lambda Sj: len(U & Sj))
-        C.add(best_subset)
-        
-        U -= best_subset
+def minimum_set_cover(matriz, k):
+    n = matriz.shape[0]
+    m = matriz.shape[1]
 
-        # Remover o subconjunto selecionado da lista de subconjuntos F
-        F.remove(best_subset)
+    selected_sets = []
 
-        # Atualizar os subconjuntos restantes em F removendo os elementos cobertos por C
-        F = [Sj - best_subset for Sj in F if len(Sj - best_subset) > 0]
+    while len(selected_sets) < k:
+        uncovered_elements = set(range(m))
+        max_covered = -1
+        max_set_idx = -1
 
-    return C
+        for i in range(n):
+            covered_elements = uncovered_elements.intersection(set(np.where(matriz[i] == 1)[0]))
+            if len(covered_elements) > max_covered:
+                max_covered = len(covered_elements)
+                max_set_idx = i
 
-# def greedy_algorithm(conj_s, f):
-#     c = []
-#     u = conj_s
-#     while(u != 0):
-#         # S* in argmax{|Si|:Si in F}
-#         c.append(conj_s*)
-#         f.pop(s*)
-#         u.pop(s*)
-#         for sj in f:
-#             #sj = sj - s*
-#             if sj = 0:
-#                 f.pop(sj)
+        selected_sets.append(max_set_idx)
 
-    
+        uncovered_elements = uncovered_elements.difference(set(np.where(matriz[max_set_idx] == 1)[0]))
 
+        matriz[max_set_idx] = np.zeros(m)
+
+    return selected_sets

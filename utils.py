@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def ler_instancia(file):
     instancia = np.loadtxt(file, dtype = str)
     instancia = np.array([list(map(int,row))for row in instancia])
@@ -25,10 +24,8 @@ def remove_restricao(matriz,lista):
             matriz = np.delete(matriz, i , 0)
     return matriz
 
-
 def acha_subconj(row1,row2):
     return  all(x ==  0 or  y ==1 for x,y in  zip(row1,row2))
-
 
 def remove_redundante(matriz):
     row = matriz.shape[0]
@@ -40,4 +37,20 @@ def remove_redundante(matriz):
             elif acha_subconj(matriz[i+1],matriz[i]):
                 matriz = remove_restricao(matriz,[i+1])
                 row -= 1
+    return matriz
+
+def rm_redundant_subconj(matriz):
+    n = matriz.shape[0]
+    # Marca os subconjuntos redundantes para remoção
+    to_remove = set()
+    for i in range(n):
+        for j in range(i+1, n):
+            if all(matriz[i] <= matriz[j]):
+                to_remove.add(i)
+            elif all(matriz[j] <= matriz[i]):
+                to_remove.add(j)
+
+    # Remove os subconjuntos redundantes
+    matriz = np.delete(matriz, list(to_remove), axis=0)
+
     return matriz
